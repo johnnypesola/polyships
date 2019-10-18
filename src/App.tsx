@@ -3,15 +3,8 @@ import "./App.css";
 import styled from "styled-components";
 import Ship from "./components/Ship";
 import { Key } from "ts-key-enum";
-import { ShipGeometry } from "./types";
+import { ShipGeometry, Movement } from "./types";
 import { moveShipForward, turnShipLeft, turnShipRight } from "./components/api";
-
-interface Movement {
-  isAccelerating: boolean;
-  isDeAccelerating: boolean;
-  isTurningLeft: boolean;
-  isTurningRight: boolean;
-}
 
 const MainSvg = styled.svg`
   background: black;
@@ -49,13 +42,11 @@ const App: React.FC = () => {
 
   const handleShipMovement = () => {
     if (movement.current.isAccelerating)
-      setShipGeometry(oldGeo => moveShipForward(oldGeo));
+      setShipGeometry(g => moveShipForward(g));
 
-    if (movement.current.isTurningLeft)
-      setShipGeometry(oldGeo => turnShipLeft(oldGeo));
+    if (movement.current.isTurningLeft) setShipGeometry(g => turnShipLeft(g));
 
-    if (movement.current.isTurningRight)
-      setShipGeometry(oldGeo => turnShipRight(oldGeo));
+    if (movement.current.isTurningRight) setShipGeometry(g => turnShipRight(g));
   };
 
   const handleOnKeyDown = (e: React.KeyboardEvent) => {
